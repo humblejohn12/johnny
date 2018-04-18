@@ -16,12 +16,12 @@
 
 ### 사전작업
 	
-#### 1) 테이블들( INS_IDA ,INS_IDR1 ,INS_IDU )을 확보
+##### 1) 테이블들( INS_IDA ,INS_IDR1 ,INS_IDU )을 확보
 테스트 서버에 설치하는 경우 전달 받은 SolutionInstall 폴더 안에 InstallFiles라는 폴더가 있고, 
 그 안에 **ida.sql, idr.sql, idu.sql** 이라는 3가지 sql 파일을 가지고 있는 sql.zip 파일이 있다. 
 이 파일들 안의 테이블을 확보하라는 이야기이다. **테스트 서버에 설치 시에는 전달 받은 파일 확인하는 것으로 이 단계 완료**  
 
-#### 2) xManager 에서 받은 profile.sql파일에서 DB명과 수집도메인 또는 아이피를 변경  
+##### 2) xManager 에서 받은 profile.sql파일에서 DB명과 수집도메인 또는 아이피를 변경  
 profile은 고객에게 제공하는 서비스 이름을 의미하고 profile.sql은 해당 서비스 DB 데이터를 가지고 있는 sql 파일을 지칭한다.
 테스트 서버에 설치시에는 전달 받은 105_WT_SaaS.sql 파일(sql.zip 안에 포함되어 있음)을 profile.sql로서 사용한다.  
 
@@ -31,10 +31,10 @@ profile은 고객에게 제공하는 서비스 이름을 의미하고 profile.sq
 
    * **TA_SERVER**: TA_SERVER 테이블에 있는 SERVER_NO가 1인 SERVER_HOST를 현재 작업하는 서버의 도메인으로 바꾸어 준다. 
 
-#### 3) xManager 에서 받은 profile.sql 파일에서 키값이 걸려있는 테이블을 먼저 지워도 키로 인해 비울 수 없다는 메세지가 나온다.  
+##### 3) xManager 에서 받은 profile.sql 파일에서 키값이 걸려있는 테이블을 먼저 지워도 키로 인해 비울 수 없다는 메세지가 나온다.  
 이 때 이하 쿼리문 실행하면 된다.
 
-```
+```sql
 SET FOREIGN_KEY_CHECKS=0;  <--추가
 TRUNCATE TABLE TA_CODE_DTL; 
 TRUNCATE TABLE TA_CODE;
@@ -47,7 +47,7 @@ SET FOREIGN_KEY_CHECKS=1; <--추가
 
 ### Server Time Sync
 
-```
+```bash
 crontab -e
 
 +---------------------------------------------------------------+
@@ -58,7 +58,7 @@ crontab -e
 
 ### 서버언어셋
 
-```
+```bash
 vi /etc/profile
 
 ---[Top-----------------------------------------
@@ -80,7 +80,7 @@ source /etc/profile
 
 ### 계정 및 설치파일 업로드
 
-```
+```shell
 useradd wisetracker
 passwd wisetracker
 ```
@@ -89,7 +89,7 @@ passwd wisetracker
 
 
 
-```
+```bash
 su - wisetracker
 mkdir -p /home/wisetracker/work
 mkdir -p /home/wisetracker/server
@@ -121,7 +121,7 @@ tar xvfpz InstallFile.tar.gz
 설치중 에러시 고려  
 
 
-```
+```shell
 yum install perl-DBI*
 yum -y install libtermcap-devel ncurese-devel
 yum -y install bison* 
@@ -137,7 +137,7 @@ yum -y install cmake*
 본격 설치 과정  
 
 
-```
+```shell
 userdel mysql
 useradd -M mysql    
 mkdir -p /data55
@@ -216,7 +216,7 @@ select Host,User,Password from user;
 DB명은 PROFILE 에서 정했던 DB이름으로 CREATE 한다. 테스트 서버에 설치할 때는 INS_로 시작하도록 하면 된다.
 
 
-```
+```sql
 mysql -u2n9soft -p2n9soft
 +-----------------------------------------------------------------+
 CREATE DATABASE INS_IDR1 /*!40100 DEFAULT CHARACTER SET utf8 */;
@@ -230,7 +230,7 @@ CREATE DATABASE INS_IDU /*!40100 DEFAULT CHARACTER SET utf8 */;
 ex) scp sql.zip root@175.158.15.226:~wisetracker/work
 
 
-```
+```shell
 mysql -u2n9soft -p2n9soft INS_IDR1 < /home/wisetracker/work/sql/idr.sql
 mysql -u2n9soft -p2n9soft INS_IDA < /home/wisetracker/work/sql/ida.sql
 mysql -u2n9soft -p2n9soft INS_IDU < /home/wisetracker/work/sql/idu.sql
@@ -245,7 +245,7 @@ mysql -u2n9soft -p2n9soft INS_IDU < /home/wisetracker/work/sql/function.sql
 
 
 
-```
+```shell
 mysql -u2n9soft -p2n9soft INS_IDA < /home/wisetracker/work/sql/TA_IPTABLE_LOCAL.sql 
 mysql -u2n9soft -p2n9soft INS_IDA < /home/wisetracker/work/sql/TA_IPTABLE_GLOBAL.sql  
 mysql -u2n9soft -p2n9soft INS_IDA < /home/wisetracker/work/sql/TA_IPTABLE_GLOBAL_INFO.sql
@@ -257,7 +257,7 @@ profile.sql을 DB에 넣는다.(테스트 서버 설치시 profile.sql은 105_WT
 
 
 
-```
+```shell
 mysql -u2n9soft -p2n9soft INS_IDA < /home/wisetracker/work/sql/profile/105_WT_SaaS.sql
 ```
 
@@ -266,7 +266,7 @@ mysql -u2n9soft -p2n9soft INS_IDA < /home/wisetracker/work/sql/profile/105_WT_Sa
 >--ALTER TABLE INS_IDA.TA_PROFILE ADD WEBVIEW_CLASS_NM varchar(128) DEFAULT '_N_' COMMENT 'WEBVIEW CLASS 이름' AFTER INTERRUPTION_TRK;
 
 #### 추가작업 1) 
-```
+```vim
 vi /etc/init.d/mysql
 
 +-----------------------------------------------------------------+
@@ -284,7 +284,7 @@ $bindir/mysql -u2n9soft -p2n9soft $LOGGER_DB -e "INSERT INTO $LOGGER_DB.TA_IPTAB
 wait_for_pid created $!; return_value=$? 밑에 ##wisetracker HEAP TABLE LOAD TA_IPTABLE## 이하를 추가하면 된다.
 wait_for_pid created $!; return_value=$? 이상은 건드리지 않는다.
 
-```
+```shell
 service mysql restart
 ```
 
@@ -293,7 +293,7 @@ service mysql restart
 mysql 접속 후 아래 쿼리문 실행
 
 
-```
+```sql
 USE INS_IDA
 SELECT * FROM TA_REPORT_OPTION WHERE RPT_NO='11050001'; 
 +-----+----------+------------+-------------------+---------------+---------+--------------+
@@ -313,7 +313,7 @@ SELECT * FROM TA_REPORT_OPTION WHERE RPT_NO='11050001';
 ```
 
 #### 추가작업 3)
-```
+```sql
 SELECT JOIN_OPTION FROM TA_DIMENSION WHERE DIMENSION_NO = 1105;
 +-------------+
 | JOIN_OPTION |
