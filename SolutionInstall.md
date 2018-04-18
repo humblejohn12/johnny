@@ -97,7 +97,7 @@ cd /home/wisetracker/work
 tar xvfpz InstallFile.tar.gz
 ```
 
-> InstallFile.tar.gz은 전달 받은 파일 중에 있으며 scp 명령어를 통해서 로컬 컴퓨터에서 서버로 파일을 가지고 온다. 
+> InstallFile.tar.gz은 전달 받은 파일 중에 있으며 scp 명령어를 통해서 로컬 컴퓨터에서 서버로 파일을 가지고 온다.  
 > ex) scp InstallFile.tar.gz root@175.158.15.226:/home/wisetracker/work;
 
 
