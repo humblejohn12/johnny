@@ -41,7 +41,7 @@ TRUNCATE TABLE TA_CODE;
 SET FOREIGN_KEY_CHECKS=1; <--추가
 ```
 
-> sql 파일은 UTF-8 언어셋으로 되어 있어야 한다. 
+> sql 파일은 UTF-8 언어셋으로 되어 있어야 한다.  
 > 만약 sql 파일이 UTF-8 언어셋이 아니라면 sublime같은 에디터를 통해 UTF-8로 인코딩하면 된다. 
 
 
