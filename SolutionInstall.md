@@ -339,7 +339,7 @@ UPDATE TA_LANGUAGE_STORAGE  SET DATA_NM='방문 지역' WHERE DATA_NO = '1105000
 ```
 
 #### 추가확인 1)
-```
+```sql
 SELECT count(*) FROM INS_IDA.TA_IPTABLE;
 +----------+
 | count(*) |
@@ -351,7 +351,7 @@ SELECT count(*) FROM INS_IDA.TA_IPTABLE;
 테스트 서버에서 105_WT_SaaS.sql로 작업할 때는
 
 
-```
+```sql
 +----------+
 | COUNT(*) |
 +----------+
@@ -361,7 +361,7 @@ SELECT count(*) FROM INS_IDA.TA_IPTABLE;
 
 
 #### 추가확인 2) 프로파일 확인
-```
+```sql
 SELECT PROFILE_NO,PROFILE_TP,PROFILE_NM,SLOT_NO,TRK_SLOT_NO,SUB_SLOT_CNT,ACTIVE_ST,INTERNAL_URL,EXCLUDE_URL
 FROM TA_PROFILE WHERE PROFILE_NO < 991001;
 
@@ -375,7 +375,7 @@ FROM TA_PROFILE WHERE PROFILE_NO < 991001;
 INTERNAL_URL 사전추가할시
 
 
-```
+```sql
 UPDATE TA_PROFILE SET INTERNAL_URL='WT_SaaS.com|logger.co.kr' WHERE PROFILE_NO='105';
 ```
 
@@ -389,7 +389,7 @@ UPDATE TA_PROFILE SET INTERNAL_URL='WT_SaaS.com|logger.co.kr' WHERE PROFILE_NO='
 
 추가로 밑에 쿼리들을 실행시킨다.
 
-```
+```sql
 DELETE FROM TA_CODE_DEFINE_PI_SLOT_100 WHERE PROFILE_NO = 0;
 DELETE FROM TA_CODE_DEFINE_PI_SLOT_101 WHERE PROFILE_NO = 0;
 DELETE FROM TA_CODE_DEFINE_PI_SLOT_102 WHERE PROFILE_NO = 0;
@@ -465,14 +465,14 @@ INSERT INTO TA_CODE_DEFINE_PI_SLOT_104 (PROFILE_NO , PI_STEP_CD , PI_NM , PAGE_U
 ### 2) JDK7
 
 ##### 32 Bit OS 일 경우
-```
+```shell
 cd /home/wisetracker
 cp /home/wisetracker/work/source/jdk-7u45-linux-i586.gz /home/wisetracker/
 tar xvfpz jdk-7u45-linux-i586.gz
 ```
 
 ##### 64 Bit OS 일 경우
-```
+```bash
 cd /home/wisetracker
 cp /home/wisetracker/work/source/jdk-7u45-linux-x64.gz /home/wisetracker/
 tar xvfpz jdk-7u45-linux-x64.gz
