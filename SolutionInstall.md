@@ -119,7 +119,7 @@ tar xvfpz InstallFile.tar.gz
 
 
 ### 1) MySQL 
-> 설치중 에러시 고려  
+설치중 에러시 고려  
 
 
 ```
@@ -135,7 +135,7 @@ yum -y install cmake*
 
 
 
-> 본격 설치 과정  
+본격 설치 과정  
 
 
 ```
@@ -214,7 +214,7 @@ select Host,User,Password from user;
 ```  
   
   
-> DB명은 PROFILE 에서 정했던 DB이름으로 CREATE 한다. 테스트 서버에 설치할 때는 INS_로 시작하도록 하면 된다.
+DB명은 PROFILE 에서 정했던 DB이름으로 CREATE 한다. 테스트 서버에 설치할 때는 INS_로 시작하도록 하면 된다.
 
 
 ```
@@ -227,7 +227,7 @@ CREATE DATABASE INS_IDU /*!40100 DEFAULT CHARACTER SET utf8 */;
 ```
   
   
-> 전달 받은 파일 중 sql.zip 을 scp 명령어를 이용해서 로컬 컴퓨터에서 서버로 옮겨서 압축을 푼 후 이하 코드 실행.
+전달 받은 파일 중 sql.zip 을 scp 명령어를 이용해서 로컬 컴퓨터에서 서버로 옮겨서 압축을 푼 후 이하 코드 실행.
 ex) scp sql.zip root@175.158.15.226:~wisetracker/work
 
 
@@ -242,7 +242,7 @@ mysql -u2n9soft -p2n9soft INS_IDU < /home/wisetracker/work/sql/function.sql
 ```
 
 
->밑에 4줄은 테스트 서버에 설치할 때는 실행하지 않아도 된다.
+밑에 4줄은 테스트 서버에 설치할 때는 실행하지 않아도 된다.
 
 
 
@@ -254,7 +254,7 @@ mysql -u2n9soft -p2n9soft INS_IDA < /home/wisetracker/work/sql/TA_IPTABLE_EXT.sq
 ```
 
   
-> profile.sql을 DB에 넣는다.(테스트 서버 설치시 profile.sql은 105_WT_SaaS.sql)
+profile.sql을 DB에 넣는다.(테스트 서버 설치시 profile.sql은 105_WT_SaaS.sql)
 
 
 
@@ -282,8 +282,8 @@ $bindir/mysql -u2n9soft -p2n9soft $LOGGER_DB -e "INSERT INTO $LOGGER_DB.TA_IPTAB
 +-----------------------------------------------------------------+
 ```
 
-> wait_for_pid created $!; return_value=$? 밑에 ##wisetracker HEAP TABLE LOAD TA_IPTABLE## 이하를 추가하면 된다.
-> wait_for_pid created $!; return_value=$? 이상은 건드리지 않는다.
+wait_for_pid created $!; return_value=$? 밑에 ##wisetracker HEAP TABLE LOAD TA_IPTABLE## 이하를 추가하면 된다.
+wait_for_pid created $!; return_value=$? 이상은 건드리지 않는다.
 
 ```
 service mysql restart
@@ -291,7 +291,7 @@ service mysql restart
 
 
 #### 추가작업 2) 글로벌수집시 리포트에서 글로벌 IPTABLE 를 한글로 표현
->mysql 접속 후 아래 쿼리문 실행
+mysql 접속 후 아래 쿼리문 실행
 
 
 ```
@@ -349,7 +349,7 @@ SELECT count(*) FROM INS_IDA.TA_IPTABLE;
 +----------+
 ```
 
-> 테스트 서버에서 105_WT_SaaS.sql로 작업할 때는
+테스트 서버에서 105_WT_SaaS.sql로 작업할 때는
 
 
 ```
@@ -644,7 +644,7 @@ mkdir -p ~wisetracker/work/wisetracker
 chown -R wisetracker:wisetracker /home/wisetracker/work/wisetracker 
 ```
 
->이하 6줄의 코드와 같이 전달 받은 SolutionSource.zip을 scp를 이용해서 /home/wisetracker/work/wisetracker 밑으로 옮기고 압축을 풀고 Tomcat을 중지시킨다.
+이하 6줄의 코드와 같이 전달 받은 SolutionSource.zip을 scp를 이용해서 /home/wisetracker/work/wisetracker 밑으로 옮기고 압축을 풀고 Tomcat을 중지시킨다.
 
 
 ```
