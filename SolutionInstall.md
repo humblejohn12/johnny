@@ -30,7 +30,6 @@ profile은 고객에게 제공하는 서비스 이름을 의미하고 profile.sq
    일반적으로 **DB_NO가 1,2,11인 것만 활성화** 되어 TA_PROFILE_DB 테이블에 등록이 되어 있어야 한다.              
 
    * **TA_SERVER**: TA_SERVER 테이블에 있는 SERVER_NO가 1인 SERVER_HOST를 현재 작업하는 서버의 도메인으로 바꾸어 준다. 
-   (*DB명과 서버주소등을 변경한다.)
 
 ##### 3) xManager 에서 받은 profile.sql 파일에서 키값이 걸려있는 테이블을 먼저 지워도 키로 인해 비울 수 없다는 메세지가 나온다.  
 이 때 이하 쿼리문 실행하면 된다.
