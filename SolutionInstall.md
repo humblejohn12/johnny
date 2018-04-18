@@ -16,21 +16,23 @@
 
 ### 사전작업
 	
-1. ##### 테이블들( INS_IDA ,INS_IDR1 ,INS_IDU )을 확보  
-테스트 서버에 설치하는 경우 전달 받은 SolutionInstall 폴더 안에 InstallFiles라는 폴더가 있다. 
-그 폴더 안에 sql.zip가 있는데 그 안에 **ida.sql, idr.sql, idu.sql** 이라는 3가지 sql 파일이 있다. 
+##### 1) 테이블들( INS_IDA ,INS_IDR1 ,INS_IDU )을 확보
+테스트 서버에 설치하는 경우 전달 받은 SolutionInstall 폴더 안에 InstallFiles라는 폴더가 있고, 
+그 안에 **ida.sql, idr.sql, idu.sql** 이라는 3가지 sql 파일을 가지고 있는 sql.zip 파일이 있다. 
 이 파일들 안의 테이블을 확보하라는 이야기이다. **테스트 서버에 설치 시에는 전달 받은 파일 확인하는 것으로 이 단계 완료**  
 
-2. ##### xManager 에서 받은 profile.sql파일에서 DB명과 수집도메인 또는 아이피를 변경  
+##### 2) xManager 에서 받은 profile.sql파일에서 DB명과 수집도메인 또는 아이피를 변경  
 profile은 고객에게 제공하는 서비스 이름을 의미하고 profile.sql은 해당 서비스 DB 데이터를 가지고 있는 sql 파일을 지칭한다.
-**테스트 서버에 설치시에는 전달 받은 105_WT_SaaS.sql 파일(sql.zip 안에 포함되어 있음)을 profile.sql로서 사용한다.**  
--- **TA_DB**: TA_DB 테이블 안의 DB_NM을 사용하는 DB 이름으로 수정해준다. 
-비활성화(IS_ACTIVE = ACT002)되어 있는 DB가 TA_PROFILE_DB 테이블에 있지 않은지 확인 후 삭제한다. 
-일반적으로 **DB_NO가 1,2,11인 것만 활성화** 되어 TA_PROFILE_DB 테이블에 등록이 되어 있어야 한다.               
--- **TA_SERVER**: TA_SERVER 테이블에 있는 SERVER_NO가 1인 SERVER_HOST를 현재 작업하는 서버의 도메인으로 바꾸어 준다. 
-(*DB명과 서버주소등을 변경한다.)
+테스트 서버에 설치시에는 전달 받은 105_WT_SaaS.sql 파일(sql.zip 안에 포함되어 있음)을 profile.sql로서 사용한다.  
 
-3. ##### xManager 에서 받은 profile.sql 파일에서 키값이 걸려있는 테이블을 먼저 지워도 키로 인해 비울 수 없다는 메세지가 나온다.  
+   * **TA_DB**: TA_DB 테이블 안의 DB_NM을 사용하는 DB 이름으로 수정해준다. 
+   비활성화(IS_ACTIVE = ACT002)되어 있는 DB가 TA_PROFILE_DB 테이블에 있지 않은지 확인 후 삭제한다. 
+   일반적으로 **DB_NO가 1,2,11인 것만 활성화** 되어 TA_PROFILE_DB 테이블에 등록이 되어 있어야 한다.              
+
+   * **TA_SERVER**: TA_SERVER 테이블에 있는 SERVER_NO가 1인 SERVER_HOST를 현재 작업하는 서버의 도메인으로 바꾸어 준다. 
+   (*DB명과 서버주소등을 변경한다.)
+
+##### 3) xManager 에서 받은 profile.sql 파일에서 키값이 걸려있는 테이블을 먼저 지워도 키로 인해 비울 수 없다는 메세지가 나온다.  
 이 때 이하 쿼리문 실행하면 된다.
 
 ```
@@ -280,8 +282,8 @@ $bindir/mysql -u2n9soft -p2n9soft $LOGGER_DB -e "INSERT INTO $LOGGER_DB.TA_IPTAB
 +-----------------------------------------------------------------+
 ```
 
-> wait_for_pid created $!; return _value=$? 밑에 ##wisetracker HEAP TABLE LOAD TA_IPTABLE## 이하를 추가하면 된다.
-> wait_for_pid created $!; return _value=$? 이상은 건드리지 않는다.
+> wait_for_pid created $!; return_value=$? 밑에 ##wisetracker HEAP TABLE LOAD TA_IPTABLE## 이하를 추가하면 된다.
+> wait_for_pid created $!; return_value=$? 이상은 건드리지 않는다.
 
 ```
 service mysql restart
@@ -375,7 +377,7 @@ INTERNAL_URL 사전추가할시
 
 
 ```
-UPDATE TA_PROFILE SET INTERNAL_URL='WT_SaaS|logger.co.kr' WHERE PROFILE_NO='105';
+UPDATE TA_PROFILE SET INTERNAL_URL='WT_SaaS.com|logger.co.kr' WHERE PROFILE_NO='105';
 ```
 
 * INTERNAL_URL 사전 추가는 웹분석을 할 때 필요했던 것이다. 모바일 분석에서는 신경쓰지 않는다.
@@ -622,7 +624,7 @@ vi /home/wisetracker/tomcat/conf/tomcat-users.xml
 
 >여기까지 기본 APACHE-TOMCAT 설치 완료가 되었다.  
 >설치가 잘 되었는지 확인하기 위해 tomcat을 실행시키고 기본페이지에 접속해보자.
->고양이페이지 잘뜨면 tomcat/webapps 아래 불필요한 디렉토리는 압축하여 보관하자.˚
+>고양이페이지 잘뜨면 tomcat/webapps 아래 불필요한 디렉토리는 압축하여 보관하자.
 
 ```
 cd /home/wisetracker/tomcat/webapps
@@ -967,20 +969,18 @@ USE INS_IDA
 SELECT PROFILE_NO,PROFILE_NM,BASE_URl,ACTIVE_ST,SLOT_NO,TRK_SLOT_NO,INTERNAL_URL,EXCLUDE_URL 
 FROM TA_PROFILE 
 WHERE ACTIVE_ST='ACT001' AND PROFILE_NO < 991001;
-+------------+-------------+-------------+-----------+---------+-------------+--------------------------+-------------+
-| PROFILE_NO | PROFILE_NM  | BASE_URl    | ACTIVE_ST | SLOT_NO | TRK_SLOT_NO | INTERNAL_URL             | EXCLUDE_URL |
-+------------+-------------+-------------+-----------+---------+-------------+--------------------------+-------------+
-|       5901 | bizsmart.jp | bizsmart.jp | ACT001    |     100 |           1 | bizsmart.jp|logger.co.kr |             |
-+------------+-------------+-------------+-----------+---------+-------------+--------------------------+-------------+
++------------+------------+-------------+-----------+---------+-------------+--------------------------+-------------+
+| PROFILE_NO | PROFILE_NM | BASE_URl    | ACTIVE_ST | SLOT_NO | TRK_SLOT_NO | INTERNAL_URL             | EXCLUDE_URL |
++------------+------------+-------------+-----------+---------+-------------+--------------------------+-------------+
+|        105 | WT_SaaS    | .           | ACT001    |     100 |           1 | WT_SaaS.com|logger.co.kr |             |
++------------+------------+-------------+-----------+---------+-------------+--------------------------+-------------+
 ```
-5901 프로파일은 1번슬롯에 저장하며 정제시 100번슬롯에 저장한다.  
-공용도메인은 정규표현식으로 bizsmart.jp|logger.co.kr 일때 만족한다.
 
--- 테스트 서버에서 105)_Waas.sql을 가지고 확인할 때는 내용이 다르게 나온다.
+105 프로파일은 1번슬롯에 저장하며 정제시 100번슬롯에 저장한다. 이는 TRK_SLOT_NO와 SLOT_NO를 보고 알 수 있다.  
+공용도메인은 정규표현식으로 WT_SaaS.com|logger.co.kr 일때 만족한다.
 
 
 수집데이터 확인 쿼리 (위 예시에서 수집데이터(Raws)는 슬롯 1번에 쌓이므로)
-
 
 ```
 USE INS_IDR1;
@@ -988,9 +988,6 @@ SELECT TM,MIN(VT),MAX(VT),MIN(VT_TZ),MAX(VT_TZ),COUNT(*) FROM TR_PAGES_SLOT_1_0 
 SELECT TM,MIN(VT),MAX(VT),MIN(VT_TZ),MAX(VT_TZ),COUNT(*) FROM TR_PAGES_SLOT_1_1 GROUP BY TM;
 SELECT TM,MIN(VT),MAX(VT),MIN(VT_TZ),MAX(VT_TZ),COUNT(*) FROM TR_PAGES_SLOT_1_2 GROUP BY TM;
 SELECT TM,MIN(VT),MAX(VT),MIN(VT_TZ),MAX(VT_TZ),COUNT(*) FROM TR_PAGES_SLOT_1_3 GROUP BY TM;
-
-UPDATE TR_PAGES_SLOT_1_1   SET TM='13', VT='2014-06-21 13:30:00', VT_TZ='2014-06-21 13:30:00';
-UPDATE TR_SESSION_SLOT_1_1 SET TM='13', VT='2014-06-21 13:30:00', VT_TZ='2014-06-21 13:30:00';
 ```
 
 
